@@ -1,15 +1,15 @@
-import { Instructor } from "../model/instructor.entities";
+import { Instructor } from "../entities/instructor.entities";
 
-export interface IInstructorService {
-    userRegister(userData: {
+export interface IInstructorController {
+  instructorRegister(userData: {
       name: string;
       email: string;
       password?: string;
       avatar?: string;
     }): any;
-    activateUser(userData: { name: string; email: string; password: string ; }): any;
+    activateInstructor(instructorData: { name: string, email: string, password: string ,}): any;
     getUser(id: string): Promise<Instructor | any>;
-    userLogin(email: string, password: string): any;
+    instructorLogin(email: string, password: string): any;
     updateUserInfo(id: string, name: string): any;
     updateAvatar(
       data: Buffer,

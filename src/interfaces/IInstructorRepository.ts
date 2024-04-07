@@ -1,5 +1,5 @@
 import { IInstructor } from "../model/schemas/instructor.schema";
-import { Instructor } from "../model/instructor.entities";
+import { Instructor } from "../entities/instructor.entities";
 
 export interface IInstructorRepository {
   register(instructorData: Instructor): Promise<IInstructor | null>;

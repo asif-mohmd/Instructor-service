@@ -9,11 +9,6 @@ export interface IInstructor extends Document {
     name: string;
     email: string;
     password?: string;
-    avatar: {
-      public_id: string;
-      url: string;
-    };
-    role: "User";
     isVerified: boolean;
     courses: Array<{ courseId: string }>;
     comparePassword: (password: string) => Promise<boolean>;
@@ -21,7 +16,7 @@ export interface IInstructor extends Document {
     // SignRefreshToken: () => string;
   }
 
-  const userSchema: Schema<IInstructor> = new mongoose.Schema(
+  const instructorSchema: Schema<IInstructor> = new mongoose.Schema(
     {
       name: {
         type: String,
@@ -61,7 +56,7 @@ export interface IInstructor extends Document {
   );
 
   // Hash password
-userSchema.pre<IInstructor>("save", async function (next) {
+  instructorSchema.pre<IInstructor>("save", async function (next) {
     if (!this.isModified) {
       next();
     }
@@ -70,7 +65,7 @@ userSchema.pre<IInstructor>("save", async function (next) {
   });
 
   // sign access token
-userSchema.methods.SignAccessToken = function () {
+  instructorSchema.methods.SignAccessToken = function () {
     return jwt.sign(
       { id: this._id, role: this.role },
       process.env.ACCESS_TOKEN || "",
@@ -81,7 +76,7 @@ userSchema.methods.SignAccessToken = function () {
   };
 
   // sign refresh token
-userSchema.methods.SignRefreshToken = function () {
+  instructorSchema.methods.SignRefreshToken = function () {
     return jwt.sign(
       { id: this._id, role: this.role },
       process.env.REFRESH_TOKEN || "",
@@ -92,9 +87,9 @@ userSchema.methods.SignRefreshToken = function () {
   };
   
   // compare password
-  userSchema.methods.comparePassword = async function (enteredPassword: string) {
+  instructorSchema.methods.comparePassword = async function (enteredPassword: string) {
     return await bcrypt.compare(enteredPassword, this.password);
   };
   
-  const UserModel: Model<IInstructor> = mongoose.model("User", userSchema);
-  export default UserModel;
+  const InstructorModel: Model<IInstructor> = mongoose.model("Instructor", instructorSchema);
+  export default InstructorModel;

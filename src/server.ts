@@ -10,8 +10,6 @@ import { connectDB } from "./config/mongodb/db";
 dotenv.config();
 connectDB()
 
-const port = process.env.PORT || 3001;
-
 
 const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/instructor.proto"),
     {keepCase: true,
@@ -38,18 +36,19 @@ const grpcServer = () =>{
             console.log(err,"error happened grpc user service");
             return
         }
-        console.log("grpc user server started on port:",port)
+        console.log("grpc instructor server started on port:",port)
     }
     )
 }
 
     server.addService((instructorProto.InstructorService as any).service, {
 
-        // Register : controller.onRegister.bind(controller),
-        // Login : controller.onLogin.bind(controller),
-        // ActivateInstructor : controller.onActivateInstructor.bind(controller)
+        Register : controller.onRegister.bind(controller),
+        Login : controller.onLogin.bind(controller),
+        ActivateInstructor : controller.onActivateInstructor.bind(controller)
         
         // Implementation of service methods
     });
+
 grpcServer();
 

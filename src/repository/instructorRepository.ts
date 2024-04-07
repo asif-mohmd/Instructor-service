@@ -1,12 +1,27 @@
-import { IInstructorRepository } from "../interfaces/IUserRepository";
-import { Instructor } from "../model/instructor.entities";
+import { IInstructorRepository } from "../interfaces/IInstructorRepository";
+import { Instructor } from "../entities/instructor.entities";
+import InstructorModel, { IInstructor } from "../model/schemas/instructor.schema";
 
 export class InstructorRepository implements IInstructorRepository{
-    register(userData: Instructor): Promise<any> {
-        throw new Error("Method not implemented.");
-    }
-    findOne(email: string): Promise<any> {
-        throw new Error("Method not implemented.");
+    register(instructorData: Instructor): Promise<IInstructor | null> {
+        console.log(instructorData,"repository........................")
+        try {
+          return InstructorModel.create(instructorData);
+        } catch (e: any) {
+          throw new Error("db error");
+        }
+      }
+      
+    async findOne(email: string): Promise<any> {
+       try{
+        const instructor = await InstructorModel.findOne({email})
+        if(instructor){
+            return instructor
+        }
+        return false
+       }catch(err){
+
+       }
     }
     findById(id: string): Promise<any> {
         throw new Error("Method not implemented.");
