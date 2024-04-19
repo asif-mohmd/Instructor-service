@@ -4,8 +4,9 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "npx tsc && cp -r node_modules dist/",
-    "start": "node dist/server.js",
+    "proto:gen": "./protogen.sh",
+    "build": "npx tsc",
+    "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts"
   },
   "author": "",
@@ -22,6 +23,7 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "globals": "^15.0.0",
+    "grpc-tools": "^1.12.4",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.6.0"
   },

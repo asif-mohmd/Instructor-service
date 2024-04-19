@@ -4,6 +4,7 @@ import { IInstructor } from "../model/schemas/instructor.schema";
 import { IInstructorInteractor } from "../interfaces/IInstructorInteractor";
 import { generateToken } from "../utils/generateToken";
 import { sendMail } from "../utils/nodeMailer";
+import { loginToken } from "../utils/loginToken";
 
 export class InstructorInteractor implements IInstructorInteractor {
   private repository: IInstructorRepository;
@@ -26,7 +27,7 @@ export class InstructorInteractor implements IInstructorInteractor {
         email: instructorData.email,
         otp: activationToken.activationCode,
       };
-      sendMail(options);
+      sendMail(options); 
       return { registerStatus, activationToken };
     } catch (err) {
       console.log(err, "errrr user regisssssss");
@@ -59,7 +60,7 @@ export class InstructorInteractor implements IInstructorInteractor {
           throw new Error("Invalid password");
         }
   
-        const activationToken = generateToken(instructor.id);
+        const activationToken = loginToken(instructor.id);
         let loginStatus: boolean = true;
         console.log(activationToken,"]]]]]]]]]]]]]]]]]]]]]]")
         const response = { msg: "Login successful", status: 201, activationToken , loginStatus };

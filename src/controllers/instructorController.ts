@@ -67,7 +67,7 @@ export class InstructorController {
       callback(null, {
         msg: response.msg,
         status: response.status,
-        otp: response.otp,
+        activationToken: response.activationToken,
         loginStatus: response.loginStatus,
       });
     } catch (error) {

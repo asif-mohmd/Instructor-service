@@ -19,9 +19,7 @@ interface IActivationToken {
         activationCode,
       },
       process.env.JWT_SECRET as Secret,
-      {
-        expiresIn: "5m",
-      }
+      
     );
 
 
