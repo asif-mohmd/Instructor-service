@@ -8,4 +8,6 @@ export interface IInstructorRepository {
   findByIdAndUpdate(id: string, name: string): Promise<IInstructor | null>;
   avatarUpdate(id: string, avatar: string): Promise<IInstructor | null>;
   updatePassword(id: string, password: string): Promise<IInstructor | null>;
+  getInstructors():any;
+  blockUnblock(instructorId:string,isVerified:Boolean):Promise<Boolean | any>
 }

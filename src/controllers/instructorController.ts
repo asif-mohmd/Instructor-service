@@ -62,6 +62,7 @@ export class InstructorController {
         email: string;
         password: string;
       };
+      console.log(email,password,"kkkkk")
       const response = await this.interactor.instructorLogin(email, password);
       console.log(response, "resssssssssssssssssssssssss");
       callback(null, {
@@ -74,4 +75,45 @@ export class InstructorController {
       callback(error);
     }
   };
+
+  onGetAllInstructors: any = async (call: any, callback: any) => {
+    try {
+      const response = await this.interactor.getAllInstructors();
+      console.log(response, "contr resssssssssssssssssssss");
+    
+      if (response && response.length > 0) {
+        const instructors = response
+    
+        callback(null, { instructors: instructors });
+      } else {
+        callback(null, { instructors: [] }); // Sending an empty array if there are no users
+      }
+    } catch (error) {
+      callback(error);
+    }
+    
+  }
+
+  onBlockUnblock: any = async (call: any, callback: any) => {
+    try {
+      const {id,isVerified} = call.request 
+      console.log(call.request, "0000000000000000000000",isVerified)
+      const response = await this.interactor.blockUnblockInstructor(id,isVerified);
+      console.log(response, "contr ressssssssssssssssssss");
+    
+      if (response) {
+        
+        callback(null, 
+          {instructorStatus : true}
+        );
+      } else {
+        callback(null, {instructorStatus : false}); // Sending an empty array if there are no users
+      }
+    } catch (error) {
+      callback(error);
+    }
+    
+  }
+
+
 }

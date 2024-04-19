@@ -12,6 +12,29 @@ export class InstructorInteractor implements IInstructorInteractor {
   constructor(repository: IInstructorRepository) {
     this.repository = repository;
   }
+  async blockUnblockInstructor(instructorId: string, isVerified: Boolean): Promise<Boolean | void> {
+    try {
+     console.log(isVerified,"7777777777777")
+     const response = await this.repository.blockUnblock(instructorId,isVerified)
+ 
+     if(response){
+       return true
+     }else{
+       return false
+     }
+    } catch (error) {
+     
+    }
+   }
+
+  async getAllInstructors(){
+    try {
+        const instructorsList = await this.repository.getInstructors()
+        return instructorsList
+    } catch (error) {
+        
+    }
+}
   async instructorRegister(instructorData: Instructor) {
     try {
       console.log("interactor")
@@ -53,11 +76,12 @@ export class InstructorInteractor implements IInstructorInteractor {
         if (!instructor) {
           return { msg: "Login failed", status: 401 };
         }
-  
         const isPasswordValid = await instructor.comparePassword(password);
   
         if (!isPasswordValid) {
-          throw new Error("Invalid password");
+          let loginStatus: boolean = true;
+          const response = { msg: "Login Failed", status: 201, loginStatus };
+          return response;
         }
   
         const activationToken = loginToken(instructor.id);
