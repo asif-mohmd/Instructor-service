@@ -9,5 +9,6 @@ export interface IInstructorInteractor {
     instructorLogin(email:string,password:string):any;
     activateInstructor(instructorData: { name: string; email: string; password: string }): any;
     getAllInstructors():any;
-    blockUnblockInstructor(instructorId:string,isVerified:Boolean):Promise<Boolean  | void>    
+    blockUnblockInstructor(instructorId:string,isVerified:Boolean):Promise<Boolean  | void> ;
+    getProfile(instructorId: string):Promise<any>   
 }

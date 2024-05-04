@@ -10,4 +10,5 @@ export interface IInstructorRepository {
   updatePassword(id: string, password: string): Promise<IInstructor | null>;
   getInstructors():any;
   blockUnblock(instructorId:string,isVerified:Boolean):Promise<Boolean | any>
+  Profile(instructorId:string):Promise<any>
 }

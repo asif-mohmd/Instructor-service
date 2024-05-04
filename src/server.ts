@@ -47,7 +47,8 @@ const grpcServer = () =>{
         Login : controller.onLogin.bind(controller),
         ActivateInstructor : controller.onActivateInstructor.bind(controller),
         GetAllInstructors : controller.onGetAllInstructors.bind(controller),
-        InstructorBlockUnblock : controller.onBlockUnblock.bind(controller)
+        InstructorBlockUnblock : controller.onBlockUnblock.bind(controller),
+        Profile : controller.onGetProfile.bind(controller)
 
         
         // Implementation of service methods

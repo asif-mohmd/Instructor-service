@@ -1,4 +1,5 @@
 import { IInstructorInteractor } from "../interfaces/IInstructorInteractor";
+const mongoose = require('mongoose');
 
 export class InstructorController {
   private interactor: IInstructorInteractor;
@@ -105,6 +106,31 @@ export class InstructorController {
         
         callback(null, 
           {instructorStatus : true}
+        );
+      } else {
+        callback(null, {instructorStatus : false}); // Sending an empty array if there are no users
+      }
+    } catch (error) {
+      callback(error);
+    }
+    
+  }
+
+  onGetProfile: any = async (call: any, callback: any) => {
+    try {
+      const {instructorId} = call.request as {
+        instructorId : string
+      }
+      console.log(call.request, "0000000000000000000000",instructorId)
+      const response = await this.interactor.getProfile(instructorId);
+      console.log(response, "contr ressssssssssssssssssss");
+    
+      if (response) {
+        
+        callback(null, 
+          { name : response.name,
+            email : response.email
+          }
         );
       } else {
         callback(null, {instructorStatus : false}); // Sending an empty array if there are no users

@@ -1,8 +1,30 @@
 import { IInstructorRepository } from "../interfaces/IInstructorRepository";
 import { Instructor } from "../entities/instructor.entities";
 import InstructorModel, { IInstructor } from "../model/schemas/instructor.schema";
+const mongoose = require('mongoose');
 
 export class InstructorRepository implements IInstructorRepository{
+
+
+    async Profile(instructorId: string): Promise<any> {
+        try {
+          
+         
+        // Convert string instructorId to ObjectId
+      console.log(instructorId,"opopopopo")
+        const instructor = await InstructorModel.findOne({ _id: instructorId });
+        console.log(instructor, "repoxxxxxxxxxxxxxxxxxx");
+            if(instructor){
+               
+                return instructor
+            }else{
+                return false
+
+            }
+        } catch (error) {
+
+        }
+    }
 
     async blockUnblock(instructorId: string, isVerified: Boolean): Promise<Boolean | any> {
         try {
