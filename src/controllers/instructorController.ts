@@ -35,7 +35,6 @@ export class InstructorController {
 
   onActivateInstructor: any = async (call: any, callback: any) => {
     try {
-      console.log("otp");
       const request = call.request as {
         name: string;
         email: string;
@@ -58,14 +57,11 @@ export class InstructorController {
 
   onLogin: any = async (call: any, callback: any) => {
     try {
-      console.log("hereeeeeeeeeeeeeeeeeeeeeeee");
       const { email, password } = call.request as {
         email: string;
         password: string;
       };
-      console.log(email,password,"kkkkk")
       const response = await this.interactor.instructorLogin(email, password);
-      console.log(response, "resssssssssssssssssssssssss");
       callback(null, {
         msg: response.msg,
         status: response.status,
@@ -80,7 +76,6 @@ export class InstructorController {
   onGetAllInstructors: any = async (call: any, callback: any) => {
     try {
       const response = await this.interactor.getAllInstructors();
-      console.log(response, "contr resssssssssssssssssssss");
     
       if (response && response.length > 0) {
         const instructors = response
@@ -98,9 +93,7 @@ export class InstructorController {
   onBlockUnblock: any = async (call: any, callback: any) => {
     try {
       const {id,isVerified} = call.request 
-      console.log(call.request, "0000000000000000000000",isVerified)
       const response = await this.interactor.blockUnblockInstructor(id,isVerified);
-      console.log(response, "contr ressssssssssssssssssss");
     
       if (response) {
         
@@ -121,9 +114,7 @@ export class InstructorController {
       const {instructorId} = call.request as {
         instructorId : string
       }
-      console.log(call.request, "0000000000000000000000",instructorId)
       const response = await this.interactor.getProfile(instructorId);
-      console.log(response, "contr ressssssssssssssssssss");
     
       if (response) {
         

@@ -16,7 +16,6 @@ export class InstructorInteractor implements IInstructorInteractor {
 
   async getProfile(instructorId: string): Promise<any> {
     try {
-      console.log(instructorId, "7777777777777")
       const response = await this.repository.Profile(instructorId)
 
       if (response) {
@@ -33,7 +32,6 @@ export class InstructorInteractor implements IInstructorInteractor {
 
   async blockUnblockInstructor(instructorId: string, isVerified: Boolean): Promise<Boolean | void> {
     try {
-      console.log(isVerified, "7777777777777")
       const response = await this.repository.blockUnblock(instructorId, isVerified)
 
       if (response) {
@@ -56,7 +54,6 @@ export class InstructorInteractor implements IInstructorInteractor {
   }
   async instructorRegister(instructorData: Instructor) {
     try {
-      console.log("interactor")
       const isEmailExist = await this.repository.findOne(instructorData.email);
 
       if (isEmailExist) {
@@ -91,27 +88,39 @@ export class InstructorInteractor implements IInstructorInteractor {
 
   async instructorLogin(email: string, password: string) {
     try {
+      const loginStatus: boolean = true;
       const instructor: IInstructor | null = await this.repository.findOne(email);
       if (!instructor) {
-        return { msg: "Login failed", status: 401 };
+        const loginStatus: boolean = false;
+        const response = { msg: "Instructor not found", status: 401, loginStatus };
+
+        return response
       }
       const isPasswordValid = await instructor.comparePassword(password);
 
       if (!isPasswordValid) {
-        const loginStatus: boolean = true;
-        const response = { msg: "Login Failed", status: 201, loginStatus };
+        const loginStatus: boolean = false;
+        const response = { msg: "Password incorrect", status: 402, loginStatus };
         return response;
       }
 
-      const activationToken = loginToken(instructor.id);
-      const loginStatus: boolean = true;
-      console.log(activationToken, "]]]]]]]]]]]]]]]]]]]]]]")
-      const response = { msg: "Login successful", status: 201, activationToken, loginStatus };
+      if(instructor.isVerified){
+        const activationToken = loginToken(instructor.id);
+      
+        const response = { msg: "Login successful", status: 201, activationToken, loginStatus };
+  
+        return response;
+      }else{
+        const loginStatus: boolean = false;
+        const response = { msg: "Your account is blocked", status: 403, loginStatus };
 
-      return response;
+        return response
+      }
+
+     
     } catch (err: any) {
       const loginStatus: boolean = false;
-      const response = { msg: "Login Failed", status: 201, loginStatus };
+      const response = { msg: "Something went wrong", status: 404, loginStatus };
       return response;
     }
   }
